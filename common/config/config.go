@@ -2,16 +2,18 @@ package config
 
 import (
 	"encoding/json"
+	"flag"
 	"fmt"
 	"io/ioutil"
 	"path/filepath"
 
-	"github.com/rc452860/vnet/common/log"
-	"github.com/rc452860/vnet/utils"
-	"github.com/rc452860/vnet/utils/iox"
+	"github.com/jarvanh/vnet/common/log"
+	"github.com/jarvanh/vnet/utils"
+	"github.com/jarvanh/vnet/utils/iox"
 )
 
 var (
+	cfg        = flag.String("cfg", "", "Config file for Manager.")
 	config     *Config
 	configFile string
 )
@@ -89,7 +91,12 @@ func CurrentConfig() *Config {
 }
 
 func LoadDefault() (*Config, error) {
-	return LoadConfig("config.json")
+	flag.Parse()
+	if *cfg != "" {
+		return LoadConfig(*cfg)
+	} else {
+		return LoadConfig("config.json")
+	}
 }
 
 func LoadConfig(file string) (*Config, error) {

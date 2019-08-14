@@ -1,4 +1,3 @@
-
 @echo off
 choice /C wl /M "windows,linux"
 if errorlevel 2 goto linux
